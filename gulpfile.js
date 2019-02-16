@@ -59,23 +59,21 @@ gulp.task('script', () => {
     // rollup 打包 js 模块
     return rollup.rollup({
         // 入口文件
-        entry: './src/js/index.js',
+        input: './src/js/index.js',
         plugins: [
-            // 对原始文件启动 eslint 检查，配置参见 ./.eslintrc.json
-            eslint(),
             resolve(),
             babel({
                 exclude: 'node_modules/**' // only transpile our source code
             })
         ]
     }).then(bundle => {
-        bundle.write({
+        return bundle.write({
             // 产出文件使用 umd 规范（即兼容 amd cjs 和 iife）
             format: 'umd',
             // iife 规范下的全局变量名称
-            moduleName: 'wangEditor',
+            name: 'wangEditor',
             // 产出的未压缩的文件名
-            dest: './release/wangEditor.js'
+            file: './release/wangEditor.js'
         }).then(() => {
             // 待 rollup 打包 js 完毕之后，再进行如下的处理：
             gulp.src('./release/wangEditor.js')

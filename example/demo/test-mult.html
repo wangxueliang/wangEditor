@@ -30,7 +30,7 @@
     </div>
 
     <!-- 引用js -->
-    <script type="text/javascript" src="/wangEditor.min.js"></script>
+    <script type="text/javascript" src="/wangEditor.js"></script>
     <script type="text/javascript">
         var E = window.wangEditor
 
@@ -38,7 +38,9 @@
         editor1.create()
 
         var editor2 = new E('#div3')
-        editor2.create()
+        editor2.create({
+            containerHeight: 150
+        })
     </script>
 </body>
 </html>

@@ -57,7 +57,8 @@ Editor.prototype = {
     },
 
     // 初始化 DOM
-    _initDom: function () {
+    _initDom: function (params) {
+        const { containerHeight } = params
         const toolbarSelector = this.toolbarSelector
         const $toolbarSelector = $(toolbarSelector)
         const textSelector = this.textSelector
@@ -84,7 +85,7 @@ Editor.prototype = {
                             .css('border', '1px solid #ccc')
             $textContainerElem.css('border', '1px solid #ccc')
                             .css('border-top', 'none')
-                            .css('height', '300px')
+                            .css('height', `${containerHeight}px`)
         } else {
             // toolbar 和 text 的选择器都有值，记录属性
             $toolbarElem = $toolbarSelector
@@ -301,12 +302,18 @@ Editor.prototype = {
     },
 
     // 创建编辑器
-    create: function () {
+    create: function (params) {
+        const defalutParams = {
+            containerHeight: 300,
+        }
         // 初始化配置信息
         this._initConfig()
 
-        // 初始化 DOM
-        this._initDom()
+        // 初始化 DOM 参数
+        this._initDom({
+            ...defalutParams,
+            ...params,
+        })
 
         // 封装 command API
         this._initCommand()
